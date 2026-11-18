@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Foto de perfil | KSR Engenharia</title>
+<style>
+/* Cores e fontes do Manual de Marca KSR (2022), seções 2 e 4. */
+:root{
+  --vinho:#5B1A2D;
+  --vinho-escuro:#410B1B;
+  --cinza:#D9D8D7;
+  --cinza-medio:#BDBDBD;
+  --cinza-escuro:#ACACAC;
+  --preto:#151515;
+  --grafite:#252525;
+  --chumbo:#2F2F2F;
+  --branco:#FFFFFF;
+
+  --fundo:var(--cinza);
+  --superficie:var(--branco);
+  --texto:var(--preto);
+  --texto-apoio:var(--chumbo);
+  --linha:var(--cinza-escuro);
+  --campo:var(--branco);
+  --foco:var(--vinho);
+
+  --titulo:"Gotham Bold","Gotham",Arial,Helvetica,sans-serif;
+  --corpo:Arial,Helvetica,"Liberation Sans",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --fundo:var(--preto);
+    --superficie:var(--grafite);
+    --texto:var(--cinza);
+    --texto-apoio:var(--cinza-medio);
+    --linha:var(--cinza-escuro);
+    --campo:var(--chumbo);
+    --foco:var(--cinza);
+    color-scheme:dark;
+  }
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--fundo);
+  color:var(--texto);
+  font-family:var(--corpo);
+  font-size:16px;
+  line-height:1.5;
+}
+.pagina{max-width:1080px;margin:0 auto;padding:24px 20px 56px}
+
+/* Canto chanfrado do manual (seção 3.1): três cantos cortados, o superior esquerdo reto. */
+.chanfro{
+  --c:22px;
+  clip-path:polygon(0 0,calc(100% - var(--c)) 0,100% var(--c),100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,var(--c) 100%,0 calc(100% - var(--c)));
+}
+
+.topo{
+  background:var(--vinho);
+  color:var(--cinza);
+  padding:36px 40px 40px;
+}
+.topo .marca{display:block;height:30px;width:auto;color:var(--cinza)}
+.topo h1{
+  font-family:var(--titulo);
+  font-weight:700;
+  font-size:34px;
+  line-height:1.15;
+  letter-spacing:-.01em;
+  margin:44px 0 10px;
+  color:var(--branco);
+}
+.topo p{margin:0;max-width:60ch;font-size:17px;color:var(--cinza)}
+
+.grade{display:grid;grid-template-columns:5fr 7fr;gap:20px;margin-top:20px;align-items:stretch}
+.bloco{background:var(--superficie);padding:28px 28px 30px}
+.largo{margin-top:20px}
+h2{
+  font-family:var(--titulo);
+  font-weight:700;
+  font-size:20px;
+  line-height:1.25;
+  margin:0 0 18px;
+}
+
+label{display:block;font-weight:700;font-size:14px;margin:0 0 6px}
+.campo{margin:0 0 18px}
+.campo:last-child{margin-bottom:0}
+.dica{font-size:13px;color:var(--texto-apoio);margin:6px 0 0}
+input[type=text],input[type=tel],select{
+  width:100%;
+  height:46px;
+  padding:0 12px;
+  border:1px solid var(--linha);
+  border-radius:0;
+  background:var(--campo);
+  color:var(--texto);
+  font:16px var(--corpo);
+}
+input::placeholder{color:var(--cinza-escuro);opacity:1}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--foco);outline-offset:2px}
+.email{display:flex}
+.email input{flex:1 1 auto;min-width:0;border-right:0}
+.email span{
+  flex:0 0 auto;
+  display:flex;align-items:center;
+  padding:0 12px;
+  border:1px solid var(--linha);
+  background:var(--fundo);
+  color:var(--texto-apoio);
+  font-size:15px;
+  white-space:nowrap;
+}
+
+/* A folha imita a janela de e-mail: sempre branca, como o Gmail no computador. */
+.papel{
+  background:#FFFFFF;
+  border:1px solid var(--linha);
+  padding:26px 26px 22px;
+  overflow-x:auto;
+}
+.papel .corpo-email{font:13px Arial,Helvetica,sans-serif;color:#2F2F2F;margin:0 0 4px}
+.papel .tracos{font:13px Arial,Helvetica,sans-serif;color:#ACACAC;margin:0 0 8px}
+.estado{font-size:14px;color:var(--texto-apoio);margin:14px 0 0;min-height:21px}
+.acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.botao{
+  --c:10px;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:0 26px;
+  border:0;cursor:pointer;
+  background:var(--vinho);color:var(--branco);
+  font:700 16px var(--corpo);
+  text-decoration:none;
+}
+.botao:hover{background:var(--vinho-escuro)}
+.botao[disabled]{background:var(--cinza-escuro);color:var(--grafite);cursor:not-allowed}
+.botao.secundario{background:var(--chumbo);color:var(--cinza)}
+.botao.secundario:hover{background:var(--preto)}
+@media (prefers-color-scheme:dark){
+  .botao.secundario{background:var(--cinza);color:var(--preto)}
+  .botao.secundario:hover{background:var(--cinza-medio)}
+}
+
+.passos{list-style:none;margin:0;padding:0;counter-reset:passo;columns:2;column-gap:40px}
+.passos li{counter-increment:passo;position:relative;padding-left:52px;min-height:36px;margin:0 0 18px;break-inside:avoid}
+.passos li:last-child{margin-bottom:0}
+.passos li::before{
+  content:counter(passo);
+  position:absolute;left:0;top:0;
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--vinho);color:var(--cinza);
+  font:700 16px var(--titulo);
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0 calc(100% - 8px));
+}
+.passos strong{font-weight:700}
+.regras{margin:0;padding-left:20px}
+.regras li{margin:0 0 6px}
+.regras li:last-child{margin-bottom:0}
+.rodape{font-size:13px;color:var(--texto-apoio);margin:22px 4px 0}
+[hidden]{display:none !important}
+
+@media (max-width:860px){
+  .pagina{padding:12px 12px 40px}
+  .topo{padding:26px 24px 30px}
+  .topo .marca{height:24px}
+  .topo h1{font-size:27px;margin-top:34px}
+  .grade{grid-template-columns:1fr}
+  .bloco{padding:22px 20px 24px}
+  .passos{columns:1}
+}
+.papel{overflow-x:auto;max-width:100%}
+.grade>*,.bloco{min-width:0}
+
+/* Página de foto de perfil (RD-006) */
+.opcoes{display:grid;gap:8px}
+.opcao{position:relative}
+.opcao input{position:absolute;opacity:0}
+.opcao label{display:flex;align-items:center;gap:14px;margin:0;border:1px solid var(--linha);background:var(--campo);padding:10px 14px;cursor:pointer;font-weight:400}
+.opcao label i{width:32px;height:32px;border-radius:50%;flex:none}
+.opcao label b{display:block;font:700 15px var(--titulo)}
+.opcao label small{color:var(--texto-apoio);font-size:13px}
+.opcao input:checked+label{border-color:var(--vinho);box-shadow:inset 0 0 0 2px var(--vinho)}
+@media (prefers-color-scheme:dark){.opcao input:checked+label{border-color:var(--cinza);box-shadow:inset 0 0 0 2px var(--cinza)}}
+.opcao input:focus-visible+label{outline:3px solid var(--foco);outline-offset:2px}
+.criterios{display:none;margin-top:18px;padding:16px;background:var(--fundo);border-left:4px solid var(--vinho);font-size:14.5px}
+.criterios.on{display:block}
+.criterios p{margin:0}
+.criterios ul{margin:6px 0 12px;padding-left:20px;color:var(--texto-apoio)}
+.confirma{display:flex;gap:10px;align-items:flex-start;margin:0;cursor:pointer}
+.confirma input{margin-top:2px;width:18px;height:18px;accent-color:var(--vinho);flex:none}
+.papel-foto{background:var(--vinho);padding:26px 22px;--c:22px;
+  clip-path:polygon(0 0,calc(100% - var(--c)) 0,100% var(--c),100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,var(--c) 100%,0 calc(100% - var(--c)))}
+.stage{width:100%;max-width:300px;aspect-ratio:1;margin:0 auto;position:relative;touch-action:none;cursor:grab}
+.stage:active{cursor:grabbing}
+.stage canvas{width:100%;height:100%;border-radius:50%;display:block;box-shadow:0 0 0 4px rgba(255,255,255,.14)}
+.stage .busy{position:absolute;inset:0;display:none;align-items:center;justify-content:center;border-radius:50%;
+  background:rgba(54,7,21,.72);color:#fff;font:700 14px var(--titulo);text-align:center;padding:30px}
+.stage.loading .busy{display:flex}
+.zoom{margin-top:18px}
+.zoom label{color:var(--cinza);font-weight:400;font-size:13px}
+.zoom input{width:100%;accent-color:#fff}
+.minis{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:14px;font-size:13px;color:var(--cinza)}
+.minis canvas{width:40px;height:40px;border-radius:50%;display:block}
+.minis .l{background:#fff;padding:6px;border-radius:26px}
+.minis .d{background:#202124;padding:6px;border-radius:26px}
+.msg{font-size:14px;color:var(--texto-apoio);margin:10px 0 0;min-height:0}
+.msg:empty{display:none}
+.msg.err{color:#B3261E}
+@media (prefers-color-scheme:dark){.msg.err{color:#F2B8B5}}
+#how{margin-top:12px}
+</style>
+</head>
+<body>
+<div class="pagina">
+
+  <header class="topo chanfro">
+    <svg class="marca" viewBox="47.371 61.293 373.594 63.41" role="img" aria-label="KSR Engenharia" fill="currentColor"><path d="M 143.148438 76.890625 C 143.148438 72.304688 146.359375 70.46875 152.324219 70.46875 L 181.6875 70.46875 C 187.648438 70.46875 190.402344 73.222656 190.402344 77.808594 L 190.402344 81.480469 L 201.875 81.480469 L 201.875 73.222656 L 189.945312 61.292969 L 144.0625 61.292969 L 132.136719 73.222656 L 132.136719 88.363281 L 187.191406 100.75 C 190.859375 101.574219 192.238281 103.960938 192.238281 106.714844 C 192.238281 113.136719 188.109375 115.429688 180.765625 115.429688 L 154.15625 115.429688 C 147.277344 115.429688 142.6875 112.21875 142.6875 105.796875 L 142.6875 101.207031 L 131.21875 101.207031 L 131.21875 113.136719 L 142.6875 124.605469 L 190.859375 124.605469 L 203.25 112.21875 L 203.25 94.785156 L 149.109375 82.398438 C 145.898438 81.664062 143.148438 79.644531 143.148438 76.890625"/><path d="M 259.714844 89.738281 L 227.132812 89.738281 L 227.132812 71.390625 L 259.714844 71.390625 C 266.132812 71.390625 270.253906 75.054688 270.253906 80.558594 C 270.253906 86.0625 266.132812 89.738281 259.714844 89.738281 M 274.835938 93.867188 L 281.734375 85.148438 L 281.734375 74.136719 L 268.882812 61.296875 L 215.664062 61.296875 L 215.664062 124.609375 L 227.132812 124.609375 L 227.132812 99.832031 L 261.089844 99.832031 C 267.507812 99.832031 271.640625 103.503906 271.640625 110.382812 L 271.640625 124.609375 L 283.105469 124.609375 L 283.105469 103.992188 Z M 274.835938 93.867188"/><path d="M 123.675781 61.296875 L 110.195312 61.296875 L 88.816406 86.746094 L 66.417969 86.746094 L 66.417969 61.296875 L 54.949219 61.296875 L 54.949219 86.746094 L 47.371094 86.746094 L 47.371094 96.839844 L 54.949219 96.839844 L 54.949219 124.609375 L 66.417969 124.609375 L 66.417969 96.839844 L 88.050781 96.839844 L 110.195312 124.609375 L 123.675781 124.609375 L 97.78125 92.953125 Z M 123.675781 61.296875"/><path d="M 353.972656 103.722656 L 358.273438 103.722656 L 356.113281 99.566406 Z M 353.972656 103.722656"/><path d="M 374.425781 100.871094 L 374.425781 100.84375 C 374.425781 99.714844 373.480469 99.121094 371.839844 99.121094 L 368.644531 99.121094 L 368.644531 102.609375 L 371.855469 102.609375 C 373.425781 102.609375 374.425781 101.941406 374.425781 100.871094"/><path d="M 391.511719 103.722656 L 395.8125 103.722656 L 393.652344 99.566406 Z M 391.511719 103.722656"/><path d="M 397.882812 107.851562 L 396.617188 105.34375 L 390.710938 105.34375 L 389.425781 107.851562 L 387.175781 107.851562 L 392.671875 97.382812 L 394.707031 97.382812 L 400.203125 107.851562 Z M 383.300781 107.851562 L 381.105469 107.851562 L 381.105469 97.457031 L 383.300781 97.457031 Z M 374.460938 107.851562 L 371.390625 104.230469 L 368.644531 104.230469 L 368.644531 107.851562 L 366.449219 107.851562 L 366.449219 97.457031 L 372.015625 97.457031 C 373.585938 97.457031 374.820312 97.84375 375.621094 98.496094 C 376.28125 99.074219 376.65625 99.832031 376.65625 100.738281 L 376.65625 100.769531 C 376.65625 102.476562 375.425781 103.5 373.695312 103.917969 L 377.066406 107.851562 Z M 364.9375 82.410156 L 374.195312 82.410156 L 374.195312 84.042969 L 367.132812 84.042969 L 367.132812 86.746094 L 373.394531 86.746094 L 373.394531 88.394531 L 367.132812 88.394531 L 367.132812 91.171875 L 374.285156 91.171875 L 374.285156 92.808594 L 364.9375 92.808594 Z M 360.34375 107.851562 L 359.074219 105.34375 L 353.171875 105.34375 L 351.886719 107.851562 L 349.636719 107.851562 L 355.132812 97.382812 L 357.167969 97.382812 L 362.664062 107.851562 Z M 348.640625 87.609375 C 348.640625 84.699219 351.300781 82.230469 355.082031 82.230469 C 357.242188 82.230469 358.597656 82.738281 359.882812 83.644531 L 358.492188 85.023438 C 357.527344 84.339844 356.5625 83.925781 354.992188 83.925781 C 352.707031 83.925781 350.941406 85.589844 350.941406 87.578125 L 350.941406 87.609375 C 350.941406 89.746094 352.636719 91.320312 355.191406 91.320312 C 356.386719 91.320312 357.4375 91.011719 358.207031 90.535156 L 358.207031 88.605469 L 355.011719 88.605469 L 355.011719 87 L 360.328125 87 L 360.328125 91.367188 C 359.078125 92.242188 357.332031 92.984375 355.117188 92.984375 C 351.210938 92.984375 348.640625 90.667969 348.640625 87.636719 Z M 345.921875 107.851562 L 343.726562 107.851562 L 343.726562 103.472656 L 337.765625 103.472656 L 337.765625 107.851562 L 335.570312 107.851562 L 335.570312 97.457031 L 337.765625 97.457031 L 337.765625 101.777344 L 343.726562 101.777344 L 343.726562 97.457031 L 345.921875 97.457031 Z M 333.453125 82.410156 L 335.484375 82.410156 L 342.175781 89.597656 L 342.175781 82.410156 L 344.335938 82.410156 L 344.335938 92.808594 L 342.5 92.808594 L 335.609375 85.410156 L 335.609375 92.808594 L 333.453125 92.808594 Z M 330.714844 107.851562 L 328.875 107.851562 L 321.988281 100.457031 L 321.988281 107.851562 L 319.828125 107.851562 L 319.828125 97.457031 L 321.863281 97.457031 L 328.554688 104.644531 L 328.554688 97.457031 L 330.714844 97.457031 Z M 319.828125 82.410156 L 329.089844 82.410156 L 329.089844 84.042969 L 322.023438 84.042969 L 322.023438 86.746094 L 328.285156 86.746094 L 328.285156 88.394531 L 322.023438 88.394531 L 322.023438 91.171875 L 329.179688 91.171875 L 329.179688 92.808594 L 319.828125 92.808594 Z M 409.039062 65.175781 L 300.113281 65.175781 L 300.113281 111.785156 L 313.027344 124.703125 L 409.253906 124.703125 L 420.964844 112.992188 L 420.964844 77.101562 Z M 409.039062 65.175781"/></svg>
+    <h1>Foto de perfil</h1>
+    <p>Escolha o fundo, envie sua foto e baixe a versão pronta para o seu perfil no Gmail, Meet e Chat. A foto é tratada no seu próprio aparelho: esta página não guarda nem envia nenhuma imagem.</p>
+  </header>
+
+  <main class="grade">
+    <section class="bloco" aria-labelledby="t-foto">
+      <h2 id="t-foto">Sua foto</h2>
+      <div class="campo">
+        <label id="l-fundo">Fundo</label>
+        <div class="opcoes" role="radiogroup" aria-labelledby="l-fundo">
+          <div class="opcao"><input type="radio" name="mode" id="mC" value="C" checked>
+            <label for="mC"><i style="background:#5B1A2D"></i><span><b>Vinho</b><small>Escritório e campo</small></span></label></div>
+          <div class="opcao"><input type="radio" name="mode" id="mB" value="B">
+            <label for="mB"><i style="background:linear-gradient(160deg,#9fb3c8,#b9805f)"></i><span><b>Obra desfocada</b><small>Somente campo</small></span></label></div>
+          <div class="opcao"><input type="radio" name="mode" id="mA" value="A">
+            <label for="mA"><i style="background:linear-gradient(160deg,#6d8fb3 0 45%,#a8643f 45%)"></i><span><b>Obra nítida</b><small>Somente campo</small></span></label></div>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="pick">Foto</label>
+        <input type="file" id="file" accept="image/*" hidden>
+        <button class="botao secundario chanfro" id="pick" type="button">Escolher foto</button>
+        <p class="dica">Do peito para cima, olhando para a câmera. Pode ser da galeria.</p>
+        <p class="msg" id="msg" role="status" aria-live="polite"></p>
+      </div>
+      <div class="campo">
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" autocomplete="name" placeholder="Roger K. S. Rocha">
+        <p class="dica">Usado só no nome do arquivo.</p>
+      </div>
+      <div class="criterios" id="check">
+        <p>Fotos com fundo de obra precisam atender a todos os critérios:</p>
+        <ul>
+          <li>Operação da KSR.</li>
+          <li>EPI completo e correto para a atividade, incluindo a vestimenta.</li>
+          <li>Nenhuma placa de veículo, logo de outra empresa ou pessoa identificável ao fundo.</li>
+          <li>Nenhuma situação de risco à vista.</li>
+        </ul>
+        <label class="confirma"><input type="checkbox" id="ok"> Confirmo que minha foto atende aos critérios.</label>
+      </div>
+    </section>
+
+    <section class="bloco" aria-labelledby="t-previa">
+      <h2 id="t-previa">Prévia</h2>
+      <div class="papel-foto">
+        <div class="stage" id="stage">
+          <canvas id="preview" width="600" height="600" aria-label="Prévia da foto de perfil"></canvas>
+          <div class="busy">Recortando o fundo…</div>
+        </div>
+        <div class="zoom">
+          <label for="zoom">Aproximação</label>
+          <input type="range" id="zoom" min="0" max="100" value="40" disabled>
+        </div>
+        <div class="minis">
+          <span>No e-mail:</span>
+          <span class="l"><canvas id="miniLight" width="80" height="80"></canvas></span>
+          <span class="d"><canvas id="miniDark" width="80" height="80"></canvas></span>
+        </div>
+      </div>
+      <p class="dica">Arraste a foto para posicionar e use a barra para aproximar.</p>
+      <p class="estado msg" id="msg2" role="status" aria-live="polite"></p>
+      <div class="acoes">
+        <button class="botao chanfro" id="share" type="button" disabled hidden>Enviar foto</button>
+        <button class="botao chanfro" id="download" type="button" disabled>Baixar foto</button>
+      </div>
+      <p class="dica" id="how"></p>
+    </section>
+  </main>
+
+  <section class="bloco largo" aria-labelledby="t-enviar">
+    <h2 id="t-enviar">Como enviar</h2>
+    <ol class="passos">
+      <li>Escolha o fundo, envie sua foto e ajuste a posição na prévia.</li>
+      <li>No celular, toque em <strong>Enviar foto</strong> e escolha o <strong>Gmail</strong>. A foto já vai anexada.</li>
+      <li>No computador, clique em <strong>Baixar foto</strong>. O arquivo vai para a pasta Downloads; anexe em um e-mail novo.</li>
+      <li>Mande para <strong>roger@ksrengenharia.com.br</strong> com o assunto <strong>Foto de perfil</strong>.</li>
+      <li>O Roger coloca a foto no seu perfil do Google Workspace. Você não precisa fazer mais nada.</li>
+    </ol>
+  </section>
+
+  <section class="bloco largo" aria-labelledby="t-tirar">
+    <h2 id="t-tirar">Como tirar a foto</h2>
+    <ul class="regras">
+      <li>Peça para outra pessoa fotografar, a 1,5 a 2 metros, com zoom de 2x. Selfie com o braço esticado deforma o rosto.</li>
+      <li>Luz de frente, com o sol atrás de quem fotografa.</li>
+      <li>Do peito para cima, olhando para a câmera.</li>
+      <li>Sem óculos escuros, boné ou fone de ouvido.</li>
+      <li>Escritório: roupa lisa, de preferência camisa ou polo KSR.</li>
+    </ul>
+  </section>
+
+  <section class="bloco largo" aria-labelledby="t-regras">
+    <h2 id="t-regras">O que não muda</h2>
+    <ul class="regras">
+      <li>Escritório usa fundo vinho. Equipe de campo pode usar o vinho ou o fundo de obra, nítido ou desfocado.</li>
+      <li>Fundo de obra só em operação da KSR, com EPI completo e correto. Em área elétrica, vale a vestimenta exigida pela NR-10.</li>
+      <li>Nenhuma placa de veículo, logo de outra empresa ou pessoa identificável ao fundo. Na dúvida, use a obra desfocada ou o vinho.</li>
+      <li>A foto é opcional e usada apenas no perfil da sua conta KSR. Quando você deixar a KSR, ela é removida.</li>
+    </ul>
+  </section>
+
+  <p class="rodape">Foto de perfil padrão KSR, versão 1.0. Aprovada por Roger K. S. Rocha em 18/11/2026 (registro de decisões RD-006).</p>
+</div>
+
+<!-- Recorte: modelo U²-Net (u2netp, Apache-2.0, github.com/xuebinqin/U-2-Net) via ONNX Runtime Web (MIT). -->
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.17.1/dist/ort.min.js"></script>
+<script>
+// <core>
+const VINHO = [91, 26, 45];
+const MODEL_SIZE = 320;
+const MEAN = [0.485, 0.456, 0.406], STD = [0.229, 0.224, 0.225];
+
+// RGBA 320x320 -> tensor NCHW normalizado (mesmo pré-processamento do rembg)
+function prepInput(rgba) {
+  const n = MODEL_SIZE * MODEL_SIZE, out = new Float32Array(3 * n);
+  for (let i = 0; i < n; i++) {
+    for (let c = 0; c < 3; c++) out[c * n + i] = (rgba[i * 4 + c] / 255 - MEAN[c]) / STD[c];
+  }
+  return out;
+}
+// saída do modelo -> 0..255 (normalização min-max)
+function outToBytes(data) {
+  let mn = Infinity, mx = -Infinity;
+  for (const v of data) { if (v < mn) mn = v; if (v > mx) mx = v; }
+  const r = mx - mn || 1, b = new Uint8ClampedArray(data.length);
+  for (let i = 0; i < data.length; i++) b[i] = Math.round((data[i] - mn) / r * 255);
+  return b;
+}
+// curva de corte aplicada já na resolução final: bordas firmes, sem halo
+function refineAlpha(a) {
+  const lo = 0.45, hi = 0.85;
+  for (let i = 0; i < a.length; i++) {
+    let t = (a[i] / 255 - lo) / (hi - lo); t = t < 0 ? 0 : t > 1 ? 1 : t;
+    a[i] = Math.round(t * t * (3 - 2 * t) * 255);
+  }
+  return a;
+}
+// desfoque de caixa separável, 3 passadas (aprox. gaussiano)
+function boxBlur(px, w, h, r) {
+  const tmp = new Float32Array(px.length);
+  const pass = (src, dst, horiz) => {
+    const len = horiz ? w : h, lines = horiz ? h : w, d = 2 * r + 1;
+    for (let l = 0; l < lines; l++) {
+      for (let c = 0; c < 4; c++) {
+        const idx = k => (horiz ? (l * w + k) : (k * w + l)) * 4 + c;
+        let acc = 0;
+        for (let k = -r; k <= r; k++) acc += src[idx(Math.min(len - 1, Math.max(0, k)))];
+        for (let k = 0; k < len; k++) {
+          dst[idx(k)] = acc / d;
+          acc += src[idx(Math.min(len - 1, k + r + 1))] - src[idx(Math.max(0, k - r))];
+        }
+      }
+    }
+  };
+  for (let i = 0; i < 3; i++) { pass(px, tmp, true); pass(tmp, px, false); }
+  return px;
+}
+// enquadramento automático a partir da máscara 320x320
+function autoCrop(mask, W, H) {
+  const S = MODEL_SIZE, th = 128;
+  let top = -1;
+  for (let y = 0; y < S && top < 0; y++) for (let x = 0; x < S; x++) if (mask[y * S + x] > th) { top = y; break; }
+  const minSide = Math.min(W, H);
+  if (top < 0) return { cx: W / 2, cy: H / 2, side: minSide };
+  const widths = [], centers = [], band = Math.round(S * 0.15);
+  for (let y = top; y < Math.min(S, top + band); y++) {
+    let a = -1, b = -1;
+    for (let x = 0; x < S; x++) if (mask[y * S + x] > th) { if (a < 0) a = x; b = x; }
+    if (a >= 0) { widths.push((b - a + 1) / S * W); centers.push((a + b + 1) / 2 / S * W); }
+  }
+  widths.sort((p, q) => p - q);
+  const headW = widths[Math.floor(widths.length * 0.75)] || W / 2;
+  const cx = centers.reduce((s, v) => s + v, 0) / centers.length;
+  const side = Math.min(minSide, Math.max(minSide * 0.3, headW * 1.75));
+  const topPx = top / S * H;
+  return { cx, cy: topPx - side * 0.1 + side / 2, side };
+}
+// </core>
+
+const $ = id => document.getElementById(id);
+const preview = $('preview'), pctx = preview.getContext('2d');
+const state = { mode: 'C', src: null, mask: null, blur: null, W: 0, H: 0, crop: null, maskReady: false };
+let session = null;
+
+async function getSession() {
+  if (!session) {
+    ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.17.1/dist/';
+    ort.env.wasm.numThreads = 1;
+    // Modelo u2netp (U²-Net, Apache-2.0) servido pelo jsDelivr, versão fixa, conferido por SHA-256
+    const buf = await (await fetch('https://cdn.jsdelivr.net/npm/@rmbg/model-u2netp@0.0.1/u2netp.onnx')).arrayBuffer();
+    const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', buf))].map(b => b.toString(16).padStart(2, '0')).join('');
+    if (hash !== '309c8469258dda742793dce0ebea8e6dd393174f89934733ecc8b14c76f4ddd8') throw new Error('Modelo de recorte inválido');
+    session = await ort.InferenceSession.create(new Uint8Array(buf), { executionProviders: ['wasm'] });
+  }
+  return session;
+}
+function canvas(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+function setMsg(t, err) { const m = $('msg'); m.textContent = t || ''; m.className = 'msg' + (err ? ' err' : ''); }
+
+function clampCrop() {
+  const c = state.crop, minS = Math.min(state.W, state.H);
+  c.side = Math.min(minS, Math.max(minS * 0.3, c.side));
+  c.cx = Math.min(state.W - c.side / 2, Math.max(c.side / 2, c.cx));
+  c.cy = Math.min(state.H - c.side / 2, Math.max(c.side / 2, c.cy));
+}
+function syncZoom() {
+  const minS = Math.min(state.W, state.H), t = (minS - state.crop.side) / (minS * 0.7);
+  $('zoom').value = Math.round(t * 100);
+}
+
+function render(target, size) {
+  const ctx = target.getContext('2d');
+  ctx.imageSmoothingQuality = 'high';
+  if (!state.src) { drawPlaceholder(ctx, size); return; }
+  const { cx, cy, side } = state.crop, sx = cx - side / 2, sy = cy - side / 2;
+  const mode = state.maskReady ? state.mode : 'A';
+  ctx.clearRect(0, 0, size, size);
+  if (mode === 'C') { ctx.fillStyle = 'rgb(' + VINHO.join(',') + ')'; ctx.fillRect(0, 0, size, size); }
+  else ctx.drawImage(mode === 'B' ? state.blur : state.src, sx, sy, side, side, 0, 0, size, size);
+  if (mode !== 'A') {
+    const p = canvas(size, size), c2 = p.getContext('2d');
+    c2.imageSmoothingQuality = 'high';
+    c2.drawImage(state.src, sx, sy, side, side, 0, 0, size, size);
+    c2.globalCompositeOperation = 'destination-in';
+    c2.drawImage(state.mask, sx, sy, side, side, 0, 0, size, size);
+    ctx.drawImage(p, 0, 0);
+  }
+}
+function drawPlaceholder(ctx, s) {
+  const bg = { C: '#5B1A2D', B: '#8a8f96', A: '#7d8a99' }[state.mode];
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, s, s);
+  ctx.fillStyle = 'rgba(255,255,255,.55)';
+  ctx.beginPath(); ctx.arc(s / 2, s * 0.42, s * 0.17, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(s / 2, s * 1.02, s * 0.36, s * 0.34, 0, 0, Math.PI * 2); ctx.fill();
+}
+function drawAll() {
+  render(preview, preview.width);
+  render($('miniLight'), 80);
+  render($('miniDark'), 80);
+  updateDownload();
+}
+const CAN_SHARE = (() => {
+  try { return !!(navigator.canShare && navigator.canShare({ files: [new File([new Blob(['x'])], 'x.jpg', { type: 'image/jpeg' })] })); }
+  catch { return false; }
+})();
+const MAIL = 'roger@ksrengenharia.com.br';
+if (CAN_SHARE) {
+  $('share').hidden = false; $('download').classList.add('secundario');
+  $('how').innerHTML = 'Toque em <b>Enviar foto</b>, escolha o <b>Gmail</b> e mande para <b>' + MAIL + '</b>. A foto já vai anexada.';
+} else {
+  $('how').innerHTML = 'Toque em <b>Baixar foto</b>. O arquivo vai para a pasta Downloads. Depois, anexe em um e-mail para <b>' + MAIL + '</b> com o assunto “Foto de perfil”.';
+}
+function updateDownload() {
+  const field = state.mode !== 'C';
+  $('check').classList.toggle('on', field);
+  const off = !state.src || (field && !$('ok').checked);
+  $('download').disabled = off; $('share').disabled = off;
+}
+
+async function loadPhoto(file) {
+  setMsg('');
+  const url = URL.createObjectURL(file), img = new Image();
+  try {
+    await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = url; });
+  } catch { setMsg('Não foi possível abrir este arquivo. Use uma foto em JPG ou PNG.', true); return; }
+  const k = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+  const W = Math.round(img.naturalWidth * k), H = Math.round(img.naturalHeight * k);
+  const src = canvas(W, H); src.getContext('2d').drawImage(img, 0, 0, W, H);
+  URL.revokeObjectURL(url);
+  Object.assign(state, { src, W, H, maskReady: false, crop: { cx: W / 2, cy: H / 2, side: Math.min(W, H) } });
+  $('zoom').disabled = false; syncZoom(); drawAll();
+  if (Math.min(W, H) < 500) setMsg('A foto tem pouca resolução e pode ficar borrada. Se possível, use uma foto maior.');
+
+  $('stage').classList.add('loading');
+  try {
+    const small = canvas(MODEL_SIZE, MODEL_SIZE), sc = small.getContext('2d');
+    sc.drawImage(src, 0, 0, MODEL_SIZE, MODEL_SIZE);
+    const input = prepInput(sc.getImageData(0, 0, MODEL_SIZE, MODEL_SIZE).data);
+    const s = await getSession();
+    const out = await s.run({ [s.inputNames[0]]: new ort.Tensor('float32', input, [1, 3, MODEL_SIZE, MODEL_SIZE]) });
+    const m320 = outToBytes(out[s.outputNames[0]].data);
+
+    // máscara em tamanho real: amplia a máscara suave e só então aplica a curva
+    const mc = canvas(MODEL_SIZE, MODEL_SIZE), mx = mc.getContext('2d'), md = mx.createImageData(MODEL_SIZE, MODEL_SIZE);
+    for (let i = 0; i < m320.length; i++) { md.data[i * 4] = md.data[i * 4 + 1] = md.data[i * 4 + 2] = m320[i]; md.data[i * 4 + 3] = 255; }
+    mx.putImageData(md, 0, 0);
+    const big = canvas(W, H), bx = big.getContext('2d');
+    bx.imageSmoothingQuality = 'high'; bx.drawImage(mc, 0, 0, W, H);
+    const bd = bx.getImageData(0, 0, W, H), alpha = new Uint8ClampedArray(W * H);
+    for (let i = 0; i < alpha.length; i++) alpha[i] = bd.data[i * 4];
+    refineAlpha(alpha);
+    for (let i = 0; i < alpha.length; i++) { bd.data[i * 4] = bd.data[i * 4 + 1] = bd.data[i * 4 + 2] = 255; bd.data[i * 4 + 3] = alpha[i]; }
+    bx.putImageData(bd, 0, 0);
+
+    // fundo desfocado: reduz, desfoca e amplia
+    const f = 6, bw = Math.max(1, Math.round(W / f)), bh = Math.max(1, Math.round(H / f));
+    const lo = canvas(bw, bh), lx = lo.getContext('2d'); lx.drawImage(src, 0, 0, bw, bh);
+    const ld = lx.getImageData(0, 0, bw, bh); const fl = Float32Array.from(ld.data);
+    boxBlur(fl, bw, bh, Math.max(2, Math.round(Math.min(bw, bh) * 0.02)));
+    ld.data.set(fl); lx.putImageData(ld, 0, 0);
+    const blur = canvas(W, H), blx = blur.getContext('2d'); blx.imageSmoothingQuality = 'high'; blx.drawImage(lo, 0, 0, W, H);
+
+    Object.assign(state, { mask: big, blur, maskReady: true, crop: autoCrop(m320, W, H) });
+    clampCrop(); syncZoom();
+  } catch (e) {
+    console.error(e);
+    setMsg('Não foi possível recortar o fundo. Verifique a conexão e tente de novo. O fundo nítido continua disponível.', true);
+    if (state.mode !== 'A') { state.mode = 'A'; $('mA').checked = true; }
+  } finally {
+    $('stage').classList.remove('loading'); drawAll();
+  }
+}
+
+// eventos
+$('pick').onclick = () => $('file').click();
+$('file').onchange = e => { const f = e.target.files[0]; if (f) loadPhoto(f); e.target.value = ''; };
+document.querySelectorAll('input[name=mode]').forEach(r => r.onchange = () => {
+  state.mode = r.value;
+  if (state.src && !state.maskReady && r.value !== 'A') setMsg('O recorte do fundo ainda não está pronto.');
+  drawAll();
+});
+$('ok').onchange = updateDownload;
+$('zoom').oninput = e => {
+  if (!state.src) return;
+  const minS = Math.min(state.W, state.H);
+  state.crop.side = minS - (e.target.value / 100) * minS * 0.7; clampCrop(); drawAll();
+};
+let drag = null;
+$('stage').addEventListener('pointerdown', e => {
+  if (!state.src) return;
+  drag = { x: e.clientX, y: e.clientY, cx: state.crop.cx, cy: state.crop.cy };
+  e.currentTarget.setPointerCapture(e.pointerId);
+});
+$('stage').addEventListener('pointermove', e => {
+  if (!drag) return;
+  const k = state.crop.side / e.currentTarget.clientWidth;
+  state.crop.cx = drag.cx - (e.clientX - drag.x) * k;
+  state.crop.cy = drag.cy - (e.clientY - drag.y) * k;
+  clampCrop(); drawAll();
+});
+['pointerup', 'pointercancel'].forEach(t => $('stage').addEventListener(t, () => drag = null));
+
+function fileName() {
+  const slug = ($('nome').value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .trim().replace(/[^A-Za-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'colaborador';
+  return 'KSR_perfil_' + slug + '.jpg';
+}
+function makeBlob() {
+  const out = canvas(1024, 1024); render(out, 1024);
+  return new Promise(r => out.toBlob(r, 'image/jpeg', 0.92));
+}
+function setMsg2(t, err) { const m = $('msg2'); m.textContent = t || ''; m.className = 'msg' + (err ? ' err' : ''); }
+$('download').onclick = async () => {
+  const b = await makeBlob(), a = document.createElement('a');
+  a.href = URL.createObjectURL(b); a.download = fileName();
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  setMsg2('Foto baixada. Agora anexe em um e-mail para ' + MAIL + '.');
+};
+$('share').onclick = async () => {
+  const file = new File([await makeBlob()], fileName(), { type: 'image/jpeg' });
+  const nome = $('nome').value.trim();
+  try {
+    await navigator.share({ files: [file], title: 'Foto de perfil', text: 'Foto de perfil KSR' + (nome ? ' - ' + nome : '') + '. Para: ' + MAIL });
+    setMsg2('Pronto. Confira se o e-mail foi para ' + MAIL + '.');
+  } catch (e) {
+    if (e.name !== 'AbortError') setMsg2('Não foi possível abrir o envio. Use Baixar foto e anexe no e-mail.', true);
+  }
+};
+drawAll();
+</script>
+</body>
+</html>
